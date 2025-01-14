@@ -1,0 +1,59 @@
+{
+  "name": "uncook",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "yarn@4.5.1",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint:es": "eslint '**/*.{js,jsx,ts,tsx}'",
+    "lint:es:fix": "eslint '**/*.{js,jsx,ts,tsx}' --fix",
+    "format": "prettier '**/*.{js,jsx,ts,tsx}'",
+    "format:fix": "prettier --write '**/*.{js,jsx,ts,tsx}'"
+  },
+  "dependencies": {
+    "@radix-ui/react-scroll-area": "^1.2.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "firebase": "^11.0.2",
+    "lucide-react": "^0.468.0",
+    "next": "15.0.3",
+    "react": "19.0.0-rc-66855b96-20241106",
+    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react-icons": "^5.4.0",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@mdx-js/loader": "^3.1.0",
+    "@mdx-js/react": "^3.1.0",
+    "@next/mdx": "^15.0.3",
+    "@tailwindcss/typography": "^0.5.15",
+    "@titicaca/eslint-config-triple": "^5.2.1",
+    "@titicaca/prettier-config-triple": "^1.2.1",
+    "@types/eslint-plugin-tailwindcss": "^3",
+    "@types/mdx": "^2.0.13",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^8.14.0",
+    "@typescript-eslint/parser": "^8.14.0",
+    "eslint": "^8",
+    "eslint-config-next": "15.0.3",
+    "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^17.13.2",
+    "eslint-plugin-tailwindcss": "^3.17.5",
+    "postcss": "^8",
+    "prettier": "^3.4.2",
+    "react-hooks": "^1.0.1",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  },
+  "resolutions": {
+    "eslint-plugin-react-hooks": "4.6.2"
+  },
+  "prettier": "@titicaca/prettier-config-triple"
+}

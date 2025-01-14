@@ -1,0 +1,4 @@
+{
+  "extends" : ["@titicaca/prettier-config-triple"],
+  "plugins": ["prettier-plugin-tailwindcss"]
+}
