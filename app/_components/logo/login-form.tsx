@@ -13,13 +13,17 @@ export default function LoginForm() {
 
   const handleSubmit = async (formData: FormData) => {
     const password = formData.get('password') as string
-    const result = await loginAction(password)
-    if (result.success) {
-      setLoggedIn(true)
-      router.refresh()
-    } else {
-      alert(result.error)
-      setLoggedIn(false)
+    try{
+      const result = await loginAction(password)
+      if (result.success) {
+        setLoggedIn(true)
+        router.refresh()
+      } else {
+        alert(result.error)
+        setLoggedIn(false)
+      }
+    }catch{
+      alert("로그인 중 에러 발생");
     }
   }
 
