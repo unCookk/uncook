@@ -1,5 +1,7 @@
 import Link from 'next/link'
 
+import LoginForm from './login-form'
+
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -46,11 +48,15 @@ interface MenuLink {
 function Links({ title, href, description }: MenuLink) {
   return (
     <Link href={href} legacyBehavior passHref>
-      <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-        <span className="text-sm font-medium leading-none">{title}</span>
-        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-          {description}
-        </p>
+      <NavigationMenuLink
+        className={navigationMenuTriggerStyle() + ' !w-full !h-16 !py-4'}
+      >
+        <div className="flex flex-col items-center justify-start">
+          <span className="text-sm font-medium leading-none">{title}</span>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {description}
+          </p>
+        </div>
       </NavigationMenuLink>
     </Link>
   )
@@ -66,7 +72,7 @@ export default function LogoNav() {
               Uncook
             </NavigationMenuTrigger>
             <NavigationMenuContent>
-              <menu className="flex h-96 w-40 flex-col">
+              <menu className="flex h-fit w-56 flex-col gap-5 pt-4">
                 {links.map((link) => (
                   <Links
                     key={link.href}
@@ -75,6 +81,7 @@ export default function LogoNav() {
                     description={link.description}
                   />
                 ))}
+                  <LoginForm />
               </menu>
             </NavigationMenuContent>
           </NavigationMenuItem>
