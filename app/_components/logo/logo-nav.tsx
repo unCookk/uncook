@@ -64,11 +64,11 @@ function Links({ title, href, description }: MenuLink) {
 
 export default function LogoNav() {
   return (
-    <header className="sticky top-0 z-50 px-12">
+    <header className="sticky top-0 z-50 px-3 md:px-12">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className="pb-0 text-lg">
+            <NavigationMenuTrigger className="pb-2 text-base md:pb-0 md:text-lg">
               Uncook
             </NavigationMenuTrigger>
             <NavigationMenuContent>
@@ -81,7 +81,7 @@ export default function LogoNav() {
                     description={link.description}
                   />
                 ))}
-                  <LoginForm />
+                <LoginForm />
               </menu>
             </NavigationMenuContent>
           </NavigationMenuItem>
