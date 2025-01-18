@@ -11,8 +11,15 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '#/components/ui/navigation-menu'
+import { getCookie } from '#/utils/next-cookies'
 
-const links: { title: string; href: string; description: string }[] = [
+interface MenuLink {
+  title: string
+  href: string
+  description: string
+}
+
+const links: MenuLink[] = [
   {
     title: 'Home',
     href: '/',
@@ -39,11 +46,6 @@ const links: { title: string; href: string; description: string }[] = [
     description: '포트폴리오를 확인하세요',
   },
 ]
-interface MenuLink {
-  title: string
-  href: string
-  description: string
-}
 
 function Links({ title, href, description }: MenuLink) {
   return (
@@ -62,7 +64,8 @@ function Links({ title, href, description }: MenuLink) {
   )
 }
 
-export default function LogoNav() {
+export default async function LogoNav() {
+  const loggedIn = (await getCookie('auth')) === 'true'
   return (
     <header className="sticky top-0 z-50 px-3 md:px-12">
       <NavigationMenu>
@@ -81,7 +84,7 @@ export default function LogoNav() {
                     description={link.description}
                   />
                 ))}
-                <LoginForm />
+                <LoginForm loggedIn={loggedIn} />
               </menu>
             </NavigationMenuContent>
           </NavigationMenuItem>
