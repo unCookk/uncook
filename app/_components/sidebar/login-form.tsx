@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 
-import { navigationMenuTriggerStyle } from '#/components/ui/navigation-menu'
 import loginAction from '#/api/login'
 import { deleteCookie } from '#/utils/next-cookies'
 
@@ -39,7 +38,7 @@ export default function LoginForm({ loggedIn }: LoginFormProps) {
       </Link>
     </div>
   ) : (
-    <form className={navigationMenuTriggerStyle()} action={handleSubmit}>
+    <form action={handleSubmit}>
       <label htmlFor="login" className="mr-2 text-sm font-medium leading-none">
         Login
       </label>
