@@ -2,6 +2,8 @@ import './globals.css'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 
+import LogoNav from './_components/logo/logo-nav'
+
 export const metadata: Metadata = {
   description: '팀 UnCook 이력서, 포트폴리오, 아티클 저장소',
   title: {
@@ -27,7 +29,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${pretendard.className} size-full`}>
-      <body className="size-full">
+      <body className="relative flex size-full flex-col">
+        <LogoNav />
         <div className="size-full overflow-x-hidden">{children}</div>
       </body>
     </html>
