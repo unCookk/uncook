@@ -12,7 +12,7 @@ export default function ResumeLayout({
   children: React.ReactNode
 }>) {
   return (
-    <div className="size-full p-4">
+    <div className="size-full px-4 pb-4">
       {children}
       <DropUp>
         <SurveyContent />

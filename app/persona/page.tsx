@@ -34,7 +34,7 @@ const personas = [
 
 export default function PersonaPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
+    <div className="flex h-full items-center justify-center p-4">
       <div className=" text-center">
         <h2 className="mb-2 text-base font-normal text-gray-500">
           안녕하세요 uncook입니다
