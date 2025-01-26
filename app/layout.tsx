@@ -2,7 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 
-import Header from './_components/header/header'
+import Header from './_components/header'
 
 export const metadata: Metadata = {
   description: '팀 UnCook 이력서, 포트폴리오, 아티클 저장소',

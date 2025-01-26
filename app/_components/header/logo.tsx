@@ -1,7 +1,3 @@
 export default function Logo() {
-  return (
-    <div>
-      <span>UNCOOK</span>
-    </div>
-  )
+  return <span>UNCOOK</span>
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { FaRegUserCircle } from 'react-icons/fa'
 
 import loginAction from '#/api/login'
 import { deleteCookie } from '#/utils/next-cookies'
@@ -40,7 +41,7 @@ export default function LoginForm({ loggedIn }: LoginFormProps) {
   ) : (
     <form action={handleSubmit}>
       <label htmlFor="login" className="mr-2 text-sm font-medium leading-none">
-        Login
+        <FaRegUserCircle />
       </label>
       <input id="login" name="password" type="password" className="w-16" />
     </form>
