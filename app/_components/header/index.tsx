@@ -1,13 +1,10 @@
 import Logo from './logo'
 import NavLogo from './nav-logo'
 
-import { getCookie } from '#/utils/next-cookies'
-
-export default async function Header() {
-  const loggedIn = (await getCookie('auth')) === 'true'
+export default function Header() {
   return (
-    <header>
-      <NavLogo loggedIn={loggedIn}>
+    <header className="absolute top-0 z-50 flex h-12 w-full items-center pl-10">
+      <NavLogo>
         <Logo />
       </NavLogo>
     </header>

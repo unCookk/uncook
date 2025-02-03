@@ -39,11 +39,19 @@ export default function LoginForm({ loggedIn }: LoginFormProps) {
       </Link>
     </div>
   ) : (
-    <form action={handleSubmit}>
-      <label htmlFor="login" className="mr-2 text-sm font-medium leading-none">
-        <FaRegUserCircle />
+    <form className="flex items-center" action={handleSubmit}>
+      <label
+        htmlFor="login"
+        className="mr-2 cursor-pointer text-sm font-medium leading-none"
+      >
+        <FaRegUserCircle className="size-5" />
       </label>
-      <input id="login" name="password" type="password" className="w-16" />
+      <input
+        id="login"
+        name="password"
+        type="password"
+        className="w-16 bg-transparent focus:bg-white"
+      />
     </form>
   )
 }

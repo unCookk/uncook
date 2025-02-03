@@ -10,6 +10,9 @@ import {
   useState,
 } from 'react'
 
+
+import { cn } from '#/lib/utils'
+
 interface SidebarContextType {
   open: boolean
   pinned: boolean
@@ -21,10 +24,18 @@ interface ChildrenProp {
   children: ReactNode
 }
 
+interface ClassNameProp extends ChildrenProp {
+  className?: string
+}
+
 export interface MenuLink {
   title: string
   href: string
   description: string
+}
+
+interface MenuLinkProps extends MenuLink {
+  active: boolean
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined)
@@ -37,7 +48,7 @@ export const useSidebar = () => {
   return context
 }
 
-function SidebarProvider({ children }: ChildrenProp) {
+export function SidebarProvider({ children }: ChildrenProp) {
   const [open, setOpen] = useState(false)
   const [pinned, setPinned] = useState(false)
 
@@ -53,16 +64,36 @@ function SidebarProvider({ children }: ChildrenProp) {
   )
 }
 
-function SidebarHoverTrigger({ children }: ChildrenProp) {
+export function Main({ children, className }: ClassNameProp) {
+  const { pinned } = useSidebar()
+
+  return (
+    <main
+      className={cn(
+        'size-full transition-all duration-300 ease-out',
+        pinned ? 'pl-72' : 'pl-0',
+        className,
+      )}
+    >
+      {children}
+    </main>
+  )
+}
+
+export function SidebarHoverTrigger({ children, className }: ClassNameProp) {
   const { setOpen } = useSidebar()
   const handleMouseEnter = () => {
     setOpen(true)
   }
 
-  return <div onMouseEnter={handleMouseEnter}>{children}</div>
+  return (
+    <div className={cn('', className)} onMouseEnter={handleMouseEnter}>
+      {children}
+    </div>
+  )
 }
 
-function SidebarContainer({ children }: ChildrenProp) {
+export function SidebarContainer({ children, className }: ClassNameProp) {
   const { open, pinned, setOpen } = useSidebar()
   const handleMouseLeave = () => {
     if (pinned === false) {
@@ -74,69 +105,110 @@ function SidebarContainer({ children }: ChildrenProp) {
     return null
   }
 
-  return <div onMouseLeave={handleMouseLeave}>{children}</div>
+  return (
+    <aside
+      className={cn(
+        'h-full border-r fixed z-40 bg-gray-50/80 backdrop-blur-sm',
+        'from-bg-500/40 to-bg-500/0 bg-gradient-to-r',
+        pinned ? 'w-64' : 'w-60',
+        className,
+      )}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="relative h-full">{children}</div>
+    </aside>
+  )
 }
 
-function SidebarPinButton({ children }: ChildrenProp) {
+export function SidebarPinButton({
+  children,
+  className,
+}: ChildrenProp & { className?: string }) {
   const { setPinned } = useSidebar()
   const toggle = () => {
     setPinned((prev) => !prev)
   }
 
-  return <button onClick={toggle}>{children}</button>
+  return (
+    <button
+      className={cn(
+        'p-2 mb-3 transition-all duration-300 ease-in-out rounded-lg',
+        'hover:scale-105 active:scale-95',
+        'hover:bg-accent',
+        className,
+      )}
+      onClick={toggle}
+    >
+      {children}
+    </button>
+  )
 }
-function SidebarPinned({ children }: ChildrenProp) {
+
+export function SidebarPinned({
+  children,
+  className,
+}: ChildrenProp & { className?: string }) {
   const { pinned } = useSidebar()
 
   if (!pinned) {
     return null
   }
 
-  return <>{children}</>
+  return (
+    <div className={cn('animate-slide-in-left', className)}>{children}</div>
+  )
 }
-function SidebarUnPinned({ children }: ChildrenProp) {
+
+export function SidebarUnPinned({
+  children,
+  className,
+}: ChildrenProp & { className?: string }) {
   const { pinned } = useSidebar()
 
   if (pinned) {
     return null
   }
 
-  return <>{children}</>
+  return (
+    <div className={cn('animate-slide-in-right', className)}>{children}</div>
+  )
 }
 
-function SidebarNavMenu({ children }: ChildrenProp) {
+export function SidebarNavMenu({ children, className }: ClassNameProp) {
   return (
     <menu>
-      <ul>{children}</ul>
+      <ul className={cn('flex flex-col gap-6', className)}>{children}</ul>
     </menu>
   )
 }
-
-function SidebarNavLink({ title, href, description }: MenuLink) {
+export function SidebarFooter({ children, className }: ClassNameProp) {
   return (
-    <li>
-      <Link
-        className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-        href={href}
-      >
-        <div className="flex flex-col items-center justify-start">
-          <span className="text-sm font-medium leading-none">{title}</span>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {description}
-          </p>
-        </div>
-      </Link>
-    </li>
+    <div className={cn('absolute bottom-0 h-14 w-full p-3', className)}>
+      {children}
+    </div>
   )
 }
 
-export const Sidebar = {
-  Provider: SidebarProvider,
-  HoverTrigger: SidebarHoverTrigger,
-  Container: SidebarContainer,
-  PinButton: SidebarPinButton,
-  NavMenu: SidebarNavMenu,
-  NavLink: SidebarNavLink,
-  Pinned: SidebarPinned,
-  UnPinned: SidebarUnPinned,
+export function SidebarNavLink({
+  title,
+  href,
+  description,
+  active,
+}: MenuLinkProps) {
+  return (
+    <li className="h-fit w-full">
+      <Link
+        className={cn(
+          'flex flex-col items-start p-4 transition-colors',
+          active ? 'bg-accent' : 'hover:bg-accent',
+        )}
+        href={href}
+      >
+        <span className="text-sm font-medium leading-none">{title}</span>
+        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          {description}
+        </p>
+      </Link>
+    </li>
+  )
 }

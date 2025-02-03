@@ -3,6 +3,10 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 
 import Header from './_components/header'
+import { Main, SidebarProvider } from './_components/sidebar'
+import AppSidebar from './_components/sidebar/app-sidebar'
+
+import { getCookie } from '#/utils/next-cookies'
 
 export const metadata: Metadata = {
   description: '팀 UnCook 이력서, 포트폴리오, 아티클 저장소',
@@ -22,16 +26,20 @@ const pretendard = localFont({
   preload: true,
 })
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const loggedIn = (await getCookie('auth')) === 'true'
   return (
     <html lang="ko" className={`${pretendard.className} size-full`}>
-      <body className="relative flex size-full flex-col">
-        <Header />
-        <div className="size-full overflow-x-hidden">{children}</div>
+      <body className="relative size-full">
+        <SidebarProvider>
+          <Header />
+          <AppSidebar loggedIn={loggedIn} />
+          <Main className="overflow-x-hidden pt-12">{children}</Main>
+        </SidebarProvider>
       </body>
     </html>
   )
