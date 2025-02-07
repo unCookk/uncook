@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import {
   createContext,
+  createElement,
   Dispatch,
   ReactNode,
   SetStateAction,
@@ -10,12 +11,14 @@ import {
   useState,
 } from 'react'
 
-
 import { cn } from '#/lib/utils'
+import isDesktopStore from '#/store/is-desktop-store'
+import { useStoreSelector } from '#/store/utils/use-store'
 
 interface SidebarContextType {
   open: boolean
   pinned: boolean
+  isDesktop: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   setPinned: Dispatch<SetStateAction<boolean>>
 }
@@ -51,12 +54,14 @@ export const useSidebar = () => {
 export function SidebarProvider({ children }: ChildrenProp) {
   const [open, setOpen] = useState(false)
   const [pinned, setPinned] = useState(false)
+  const isDesktop = useStoreSelector(isDesktopStore, (state) => state)
 
   const value = {
     open,
     pinned,
     setOpen,
     setPinned,
+    isDesktop,
   }
 
   return (
@@ -82,6 +87,7 @@ export function Main({ children, className }: ClassNameProp) {
 
 export function SidebarHoverTrigger({ children, className }: ClassNameProp) {
   const { setOpen } = useSidebar()
+
   const handleMouseEnter = () => {
     setOpen(true)
   }
@@ -93,8 +99,38 @@ export function SidebarHoverTrigger({ children, className }: ClassNameProp) {
   )
 }
 
+export function SidebarTrigger({ children, className }: ClassNameProp) {
+  const { setOpen } = useSidebar()
+
+  const handleToggle = () => {
+    setOpen((prev) => !prev)
+  }
+  return (
+    <button className={cn('transition-all', className)} onClick={handleToggle}>
+      {children}
+    </button>
+  )
+}
+
+export function SidebarTriggerOpen({ children }: ClassNameProp) {
+  const { open } = useSidebar()
+
+  if (open) {
+    return <>{children}</>
+  }
+}
+
+export function SidebarTriggerClosed({ children }: ClassNameProp) {
+  const { open } = useSidebar()
+
+  if (!open) {
+    return <>{children}</>
+  }
+}
+
 export function SidebarContainer({ children, className }: ClassNameProp) {
-  const { open, pinned, setOpen } = useSidebar()
+  const { open, pinned, setOpen, isDesktop } = useSidebar()
+
   const handleMouseLeave = () => {
     if (pinned === false) {
       setOpen(false)
@@ -105,18 +141,24 @@ export function SidebarContainer({ children, className }: ClassNameProp) {
     return null
   }
 
-  return (
-    <aside
-      className={cn(
-        'h-full border-r fixed z-40 bg-gray-50/80 backdrop-blur-sm',
-        'from-bg-500/40 to-bg-500/0 bg-gradient-to-r',
-        pinned ? 'w-64' : 'w-60',
-        className,
-      )}
-      onMouseLeave={handleMouseLeave}
-    >
-      <div className="relative h-full">{children}</div>
-    </aside>
+  const baseClassName = cn(
+    'h-full border-r fixed z-40',
+    isDesktop
+      ? 'bg-gray-50/80 backdrop-blur-md'
+      : 'bg-gray-50 backdrop-blur-none',
+    !isDesktop ? 'w-full' : pinned ? 'w-64' : 'w-60',
+    className,
+  )
+
+  const props = {
+    className: baseClassName,
+    ...(isDesktop && { onMouseLeave: handleMouseLeave }),
+  }
+
+  return createElement(
+    'aside',
+    props,
+    createElement('div', { className: 'relative h-full' }, children),
   )
 }
 
@@ -124,24 +166,26 @@ export function SidebarPinButton({
   children,
   className,
 }: ChildrenProp & { className?: string }) {
-  const { setPinned } = useSidebar()
+  const { setPinned, isDesktop } = useSidebar()
   const toggle = () => {
     setPinned((prev) => !prev)
   }
 
-  return (
-    <button
-      className={cn(
-        'p-2 mb-3 transition-all duration-300 ease-in-out rounded-lg',
-        'hover:scale-105 active:scale-95',
-        'hover:bg-accent',
-        className,
-      )}
-      onClick={toggle}
-    >
-      {children}
-    </button>
-  )
+  if (isDesktop) {
+    return (
+      <button
+        className={cn(
+          'p-2 mb-3 transition-all duration-300 ease-in-out rounded-lg',
+          'hover:scale-105 active:scale-95',
+          'hover:bg-accent',
+          className,
+        )}
+        onClick={toggle}
+      >
+        {children}
+      </button>
+    )
+  }
 }
 
 export function SidebarPinned({

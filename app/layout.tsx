@@ -5,6 +5,7 @@ import localFont from 'next/font/local'
 import Header from './_components/header'
 import { Main, SidebarProvider } from './_components/sidebar'
 import AppSidebar from './_components/sidebar/app-sidebar'
+import DesktopSizeWatcher from './_components/desktop-size-watcher'
 
 import { getCookie } from '#/utils/next-cookies'
 
@@ -35,6 +36,7 @@ export default async function RootLayout({
   return (
     <html lang="ko" className={`${pretendard.className} size-full`}>
       <body className="relative size-full">
+        <DesktopSizeWatcher />
         <SidebarProvider>
           <Header />
           <AppSidebar loggedIn={loggedIn} />
