@@ -244,7 +244,7 @@ export function SidebarNavLink({
       <Link
         className={cn(
           'flex flex-col items-start p-4 transition-colors',
-          active ? 'bg-accent' : 'hover:bg-accent',
+          active ? 'bg-stone-300' : 'hover:bg-stone-300',
         )}
         href={href}
       >
