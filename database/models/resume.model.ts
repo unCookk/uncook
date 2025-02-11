@@ -1,5 +1,5 @@
 // models/Resume.ts
-import mongoose, { Schema, Document } from 'mongoose'
+import mongoose, { Schema, Document, Model } from 'mongoose'
 
 // 연락처 인터페이스
 export interface IContact extends Document {
@@ -71,16 +71,23 @@ const ResumeSectionSchema: Schema = new Schema({
 })
 
 // 전체 이력서 스키마
-const ResumeSchema: Schema = new Schema({
-  title: { type: String, required: true },
-  introduction: { type: String, required: true },
-  contacts: [ContactSchema],
-  team: String,
-  sections: [ResumeSectionSchema],
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-})
+const ResumeSchema: Schema = new Schema(
+  {
+    title: { type: String, required: true },
+    introduction: { type: String, required: true },
+    contacts: [ContactSchema],
+    team: String,
+    sections: [ResumeSectionSchema],
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
+  },
+  {
+    strict: 'throw', // 원치 않는 데이터가 스키마로 들어오면 에러 던짐
+  },
+)
 
-// 모델 생성 (이미 생성되어 있다면 재사용)
-export default mongoose.models.Resume ||
+const Resume: Model<IResume> =
+  (mongoose.models.Resume as Model<IResume>) ||
   mongoose.model<IResume>('Resume', ResumeSchema)
+// 모델 생성 (이미 생성되어 있다면 재사용)
+export default Resume
