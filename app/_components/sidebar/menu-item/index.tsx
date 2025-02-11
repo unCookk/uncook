@@ -17,8 +17,8 @@ export default function MenuLink({
   return (
     <Link
       className={cn(
-        'flex flex-col items-start p-4 transition-colors',
-        active ? 'bg-stone-300' : 'hover:bg-stone-300',
+        'flex flex-col items-start p-4 transition-colors rounded-lg',
+        active ? 'bg-gray-300' : 'hover:bg-gray-300',
       )}
       href={href}
     >
