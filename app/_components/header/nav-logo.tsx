@@ -10,17 +10,15 @@ import {
   SidebarTrigger,
   SidebarTriggerClosed,
   SidebarTriggerOpen,
+  useSidebar,
 } from '../sidebar'
-
-import isDesktopStore from '#/store/is-desktop-store'
-import { useStoreSelector } from '#/store/utils/use-store'
 
 interface SidebarTriggerProps {
   children: ReactNode
 }
 
 export default function NavLogo({ children }: SidebarTriggerProps) {
-  const isDesktop = useStoreSelector(isDesktopStore, (state) => state)
+  const { isDesktop } = useSidebar()
 
   if (isDesktop) {
     return (

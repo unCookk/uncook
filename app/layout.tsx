@@ -5,9 +5,9 @@ import localFont from 'next/font/local'
 import Header from './_components/header'
 import { Main, SidebarProvider } from './_components/sidebar'
 import AppSidebar from './_components/sidebar/app-sidebar'
-import DesktopSizeWatcher from './_components/desktop-size-watcher'
 
 import { getCookie } from '#/utils/next-cookies'
+import { getDeviceType } from '#/utils/get-device-type'
 
 export const metadata: Metadata = {
   description: '팀 UnCook 이력서, 포트폴리오, 아티클 저장소',
@@ -33,13 +33,17 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const loggedIn = (await getCookie('auth')) === 'true'
+  const deviceType = await getDeviceType()
+
   return (
     <html lang="ko" className={`${pretendard.className} size-full`}>
       <body className="relative size-full">
-        <DesktopSizeWatcher />
-        <SidebarProvider>
+        <SidebarProvider
+          isDesktop={deviceType === 'desktop'}
+          loggedIn={loggedIn}
+        >
           <Header />
-          <AppSidebar loggedIn={loggedIn} />
+          <AppSidebar />
           <Main className="overflow-x-hidden pt-12">{children}</Main>
         </SidebarProvider>
       </body>

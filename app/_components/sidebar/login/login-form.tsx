@@ -1,15 +1,10 @@
 'use client'
 
-import Link from 'next/link'
 import { FaRegUserCircle } from 'react-icons/fa'
 
 import loginAction from '#/api/login'
-import { deleteCookie } from '#/utils/next-cookies'
 
-interface LoginFormProps {
-  loggedIn: boolean
-}
-export default function LoginForm({ loggedIn }: LoginFormProps) {
+export default function LoginForm() {
   const handleSubmit = async (formData: FormData) => {
     const password = formData.get('password') as string
     try {
@@ -22,23 +17,7 @@ export default function LoginForm({ loggedIn }: LoginFormProps) {
     }
   }
 
-  const handleLogout = async () => {
-    await deleteCookie('auth')
-  }
-  return loggedIn ? (
-    <div className="flex gap-4 text-sm font-medium leading-none">
-      <button
-        className="p-2 transition-colors hover:bg-accent"
-        type="button"
-        onClick={handleLogout}
-      >
-        logout
-      </button>
-      <Link className="p-2 transition-colors hover:bg-accent" href="/edit">
-        Edit
-      </Link>
-    </div>
-  ) : (
+  return (
     <form className="flex items-center" action={handleSubmit}>
       <label
         htmlFor="login"

@@ -1,9 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import {
   createContext,
-  createElement,
   Dispatch,
   ReactNode,
   SetStateAction,
@@ -12,13 +10,12 @@ import {
 } from 'react'
 
 import { cn } from '#/lib/utils'
-import isDesktopStore from '#/store/is-desktop-store'
-import { useStoreSelector } from '#/store/utils/use-store'
 
 interface SidebarContextType {
   open: boolean
   pinned: boolean
   isDesktop: boolean
+  loggedIn: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   setPinned: Dispatch<SetStateAction<boolean>>
 }
@@ -31,14 +28,9 @@ interface ClassNameProp extends ChildrenProp {
   className?: string
 }
 
-export interface MenuLink {
-  title: string
-  href: string
-  description: string
-}
-
-interface MenuLinkProps extends MenuLink {
-  active: boolean
+interface SidebarProviderProps extends ChildrenProp {
+  isDesktop: boolean
+  loggedIn: boolean
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined)
@@ -51,17 +43,21 @@ export const useSidebar = () => {
   return context
 }
 
-export function SidebarProvider({ children }: ChildrenProp) {
+export function SidebarProvider({
+  children,
+  isDesktop,
+  loggedIn,
+}: SidebarProviderProps) {
   const [open, setOpen] = useState(false)
   const [pinned, setPinned] = useState(false)
-  const isDesktop = useStoreSelector(isDesktopStore, (state) => state)
 
-  const value = {
+  const value: SidebarContextType = {
     open,
     pinned,
     setOpen,
     setPinned,
     isDesktop,
+    loggedIn,
   }
 
   return (
@@ -143,6 +139,7 @@ export function SidebarContainer({ children, className }: ClassNameProp) {
 
   const baseClassName = cn(
     'h-full border-r fixed z-40',
+    'flex flex-col justify-between',
     isDesktop
       ? 'bg-gray-50/80 backdrop-blur-md'
       : 'bg-gray-50 backdrop-blur-none',
@@ -155,17 +152,14 @@ export function SidebarContainer({ children, className }: ClassNameProp) {
     ...(isDesktop && { onMouseLeave: handleMouseLeave }),
   }
 
-  return createElement(
-    'aside',
-    props,
-    createElement('div', { className: 'relative h-full' }, children),
-  )
+  return <aside {...props}>{children}</aside>
 }
 
-export function SidebarPinButton({
-  children,
-  className,
-}: ChildrenProp & { className?: string }) {
+export function SidebarHeader({ children, className }: ClassNameProp) {
+  return <div className={cn('h-14 w-full p-3', className)}>{children}</div>
+}
+
+export function SidebarPinButton({ children, className }: ClassNameProp) {
   const { setPinned, isDesktop } = useSidebar()
   const toggle = () => {
     setPinned((prev) => !prev)
@@ -188,10 +182,7 @@ export function SidebarPinButton({
   }
 }
 
-export function SidebarPinned({
-  children,
-  className,
-}: ChildrenProp & { className?: string }) {
+export function SidebarPinned({ children, className }: ClassNameProp) {
   const { pinned } = useSidebar()
 
   if (!pinned) {
@@ -203,10 +194,7 @@ export function SidebarPinned({
   )
 }
 
-export function SidebarUnPinned({
-  children,
-  className,
-}: ChildrenProp & { className?: string }) {
+export function SidebarUnPinned({ children, className }: ClassNameProp) {
   const { pinned } = useSidebar()
 
   if (pinned) {
@@ -218,41 +206,20 @@ export function SidebarUnPinned({
   )
 }
 
+export function SidebarNav({ children, className }: ClassNameProp) {
+  return <nav className={cn('flex-1', className)}>{children}</nav>
+}
+
 export function SidebarNavMenu({ children, className }: ClassNameProp) {
   return (
-    <menu>
-      <ul className={cn('flex flex-col gap-6', className)}>{children}</ul>
-    </menu>
-  )
-}
-export function SidebarFooter({ children, className }: ClassNameProp) {
-  return (
-    <div className={cn('absolute bottom-0 h-14 w-full p-3', className)}>
-      {children}
-    </div>
+    <menu className={cn('flex flex-col gap-6', className)}>{children}</menu>
   )
 }
 
-export function SidebarNavLink({
-  title,
-  href,
-  description,
-  active,
-}: MenuLinkProps) {
-  return (
-    <li className="h-fit w-full">
-      <Link
-        className={cn(
-          'flex flex-col items-start p-4 transition-colors',
-          active ? 'bg-stone-300' : 'hover:bg-stone-300',
-        )}
-        href={href}
-      >
-        <span className="text-sm font-medium leading-none">{title}</span>
-        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-          {description}
-        </p>
-      </Link>
-    </li>
-  )
+export function SidebarMenuItem({ children, className }: ClassNameProp) {
+  return <li className={cn('h-fit w-full', className)}>{children}</li>
+}
+
+export function SidebarFooter({ children, className }: ClassNameProp) {
+  return <div className={cn('h-14 w-full p-3', className)}>{children}</div>
 }
