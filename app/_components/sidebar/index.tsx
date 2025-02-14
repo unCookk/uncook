@@ -6,8 +6,10 @@ import {
   ReactNode,
   SetStateAction,
   useContext,
+  useEffect,
   useState,
 } from 'react'
+import { usePathname } from 'next/navigation'
 
 import { cn } from '#/lib/utils'
 
@@ -126,6 +128,15 @@ export function SidebarTriggerClosed({ children }: ClassNameProp) {
 
 export function SidebarContainer({ children, className }: ClassNameProp) {
   const { open, pinned, setOpen, isDesktop } = useSidebar()
+
+  const pathname = usePathname()
+
+  // 라우트 변경 시 모바일에서 사이드바 닫기
+  useEffect(() => {
+    if (!isDesktop) {
+      setOpen(false)
+    }
+  }, [pathname, setOpen, isDesktop])
 
   const handleMouseLeave = () => {
     if (pinned === false) {
