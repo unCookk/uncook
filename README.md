@@ -10,19 +10,19 @@
 
    - primary view: 이력서
    - secondary view: uncook에 저장한 아티클
-   - [doc](https://github.com/unCookk/uncook/tree/main/docs/resume-split-view.md)
+   - [doc](https://github.com/unCookk/uncook/tree/main/docs/ux/resume-split-view.md)
 
 2. 에피소드 중심 이력서
 
    - 프로젝트 중심이 아닌 에피소드 중심의 템플릿 제공
    - 어필하고 싶은 역량을 중심으로 작성할 수 있는 템플릿 제공
-   - [doc](https://github.com/unCookk/uncook/tree/main/docs/resume-verify-issue.md)
+   - [doc](https://github.com/unCookk/uncook/tree/main/docs/ux/resume-verify-issue.md)
 
 3. 독자 맞춤 이력서
 
    - 사용자 페르소나에 따른 맞춤 이력서 제공
    - 개발자, 인사담당자, 팀 리드, 기타
-   - [doc](https://github.com/unCookk/uncook/tree/main/docs/cocktail-party-effect.md)
+   - [doc](https://github.com/unCookk/uncook/tree/main/docs/ux/cocktail-party-effect.md)
 
 4. 피드백 받고 발전하는 이력서
 
@@ -88,4 +88,3 @@ UX 전문 프런트엔드 개발자를 목표로 하는 프런트엔드 팀입�
 ## 구조 설계
 
 ## Issue 해결
-
