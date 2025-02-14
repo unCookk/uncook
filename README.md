@@ -88,3 +88,5 @@ UX 전문 프런트엔드 개발자를 목표로 하는 프런트엔드 팀입�
 ## 구조 설계
 
 ## Issue 해결
+
+[기기에 따른 반응형 사이드바를 어떻게 제작할 것인가?](https://github.com/unCookk/uncook/tree/main/docs/sidebar.md)
