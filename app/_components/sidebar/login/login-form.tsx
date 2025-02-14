@@ -1,8 +1,6 @@
-'use client'
-
 import { FaRegUserCircle } from 'react-icons/fa'
 
-import loginAction from '#/api/login'
+import loginAction from '#/app/api/login'
 
 export default function LoginForm() {
   const handleSubmit = async (formData: FormData) => {
