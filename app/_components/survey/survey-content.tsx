@@ -1,7 +1,7 @@
 'use client'
 import { useState, useCallback } from 'react'
 
-import { QuestionBlock } from './contentElements/question-block'
+import { QuestionBlock } from './content-elements/question-block'
 import { surveyData } from './survey-data'
 
 import { addDocument } from '#/lib/firebase/firestore'
