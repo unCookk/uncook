@@ -55,15 +55,6 @@ const classifyDeviceType = (userAgent: string): DeviceType => {
     'i',
   )
 
-  // 디버깅을 위한 상세 로깅
-  console.log({
-    userAgent,
-    isIPad: iPadRegex.test(userAgent),
-    isMac: macRegex.test(userAgent),
-    isMobile: mobileRegex.test(userAgent),
-    isTablet: tabletRegex.test(userAgent),
-  })
-
   // iPad 체크
   if (iPadRegex.test(userAgent) && !macRegex.test(userAgent)) {
     return 'tablet'
