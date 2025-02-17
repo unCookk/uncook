@@ -39,7 +39,8 @@
 2. 댓글 작성, 수정, 삭제 기능 제공
 3. 아티클 정렬, 검색 기능 제공
 
-###
+![관리자 페이지](https://github.com/user-attachments/assets/1fa94f6c-c7eb-4c1e-9cbc-341b5f41f441)
+
 
 ## ✏️ 팀 소개
 
